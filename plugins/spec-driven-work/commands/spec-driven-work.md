@@ -1,7 +1,6 @@
----
-name: spec-driven-work
-description: Work on projects through well-defined specs. Spec-first approach with no ambiguity.
----
+| description | argument-hint |
+|---|---|
+| Work on projects through well-defined specs. Spec-first approach with no ambiguity. | Optional context about the work |
 
 # spec-driven-work
 
