@@ -1,0 +1,11 @@
+{
+  "name": "agents",
+  "description": "Claude Code skills and agents",
+  "plugins": [
+    {
+      "name": "spec-driven-work",
+      "description": "Work on projects through well-defined specs. Spec-first approach with no ambiguity.",
+      "path": "skills/spec-driven-work"
+    }
+  ]
+}
