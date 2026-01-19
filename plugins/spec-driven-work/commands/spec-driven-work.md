@@ -1,6 +1,7 @@
-| description | argument-hint |
-|---|---|
-| Work on projects through well-defined specs. Spec-first approach with no ambiguity. | Optional context about the work |
+---
+description: Work on projects through well-defined specs. Spec-first approach with no ambiguity.
+argument-hint: Optional context about the work
+---
 
 # spec-driven-work
 
