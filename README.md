@@ -10,7 +10,7 @@ Work on projects through well-defined specs. Spec-first approach with no ambigui
 
 **Location:** `plugins/specops/`
 
-**Command:** `/spec-driven-work`
+**Command:** `/spec-driven-workflow`
 
 **Skill:** `specops:spec-driven-work`
 
