@@ -1,7 +1,7 @@
 ---
 name: Spec-Driven Work
 description: Work on projects through well-defined specs. Spec-first approach with no ambiguity.
-version: 1.0.0
+version: 1.1.0
 ---
 
 # spec-driven-work
@@ -158,6 +158,53 @@ When following an existing spec to do work.
 2. **Follow literally** - Zero creativity, do exactly what spec says
 3. **Flag gaps** - If spec doesn't cover something, stop and discuss
 4. **Report in spec terms** - Use the spec's terminology and structure
+
+### Progress Tracking
+
+Document every completed step immediately after completion. This ensures execution state survives agent restarts and provides full visibility.
+
+**Before starting execution:**
+1. Check if the spec defines a progress file location
+2. If not defined, ask the user where to track progress
+3. Create the progress file before executing the first step
+
+**After each step (not batched - immediately after each one):**
+
+Update the progress file with:
+- **Step** (required): Which step from the spec was completed
+- **Status** (required): done / blocked / skipped
+- **Result** (required): What happened (free text)
+- **Files modified** (required if any): Work artifacts changed as deliverables of this step. Excludes the progress file itself, temp files, and logs.
+- **Decisions made** (if any): Choices made during execution
+- **Blockers/gaps** (if any): Why execution stopped
+
+**Progress file format:**
+
+```markdown
+# Progress: [Spec Name]
+
+**Spec:** [link to spec]
+**Started:** [date]
+**Status:** in-progress / completed / blocked
+
+---
+
+## Step 1: [Step name from spec]
+- **Status:** done
+- **Result:** [what happened]
+- **Files modified:**
+  - path/to/file.ts
+
+## Step 2: [Step name from spec]
+- **Status:** blocked
+- **Result:** [what happened before blocking]
+- **Blockers:** [why stopped]
+```
+
+**Rules:**
+- Never batch updates - document immediately after each step
+- Keep progress files permanently (do not delete on completion)
+- Update status field at top when execution completes or blocks
 
 ### When You Hit a Gap
 
