@@ -3,12 +3,16 @@
 # Usage: .\install.ps1 [version]
 #   .\install.ps1         # Install latest release
 #   .\install.ps1 v2.2.0  # Install specific version
-
-param(
-    [string]$Version = "latest"
-)
+# Note: When run via "irm ... | iex", always installs latest release
 
 $ErrorActionPreference = "Stop"
+
+# Get version from argument (only works when run as script file, not via iex)
+if ($args.Count -gt 0) {
+    $Version = $args[0]
+} else {
+    $Version = "latest"
+}
 
 $CURSOR_DIR = "$env:USERPROFILE\.cursor"
 $SKILLS_DIR = "$CURSOR_DIR\skills\specops"
