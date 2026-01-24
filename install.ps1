@@ -39,6 +39,7 @@ if (Test-Path $SKILLS_DIR) {
 # Create directories
 Write-Status "Creating directories..."
 New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-driven-work" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-driven-work\assets" | Out-Null
 New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-step-execution" | Out-Null
 if (-not (Test-Path $AGENTS_DIR)) {
     New-Item -ItemType Directory -Force -Path $AGENTS_DIR | Out-Null
@@ -61,6 +62,28 @@ foreach ($skill in $skills) {
         Write-Success "  Downloaded $($skill.name)"
     } catch {
         Write-Error "  Failed to download $($skill.name): $_"
+        exit 1
+    }
+}
+
+# Download assets
+Write-Status "Downloading assets..."
+
+$assets = @(
+    "research-template.md",
+    "spec-template.md",
+    "progress-template.md"
+)
+
+foreach ($asset in $assets) {
+    $url = "$REPO_RAW/skills/spec-driven-work/assets/$asset"
+    $dest = "$SKILLS_DIR\spec-driven-work\assets\$asset"
+    
+    try {
+        Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
+        Write-Success "  Downloaded assets/$asset"
+    } catch {
+        Write-Error "  Failed to download assets/${asset}: $_"
         exit 1
     }
 }

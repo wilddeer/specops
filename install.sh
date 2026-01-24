@@ -48,6 +48,7 @@ fi
 # Create directories
 status "Creating directories..."
 mkdir -p "$SKILLS_DIR/spec-driven-work"
+mkdir -p "$SKILLS_DIR/spec-driven-work/assets"
 mkdir -p "$SKILLS_DIR/spec-step-execution"
 mkdir -p "$AGENTS_DIR"  # Creates if not exists, no-op otherwise
 
@@ -79,6 +80,21 @@ for skill in "spec-driven-work" "spec-step-execution"; do
         success "  Downloaded $skill"
     else
         error "  Failed to download $skill"
+        exit 1
+    fi
+done
+
+# Download assets
+status "Downloading assets..."
+
+for asset in "research-template.md" "spec-template.md" "progress-template.md"; do
+    url="$REPO_RAW/skills/spec-driven-work/assets/$asset"
+    dest="$SKILLS_DIR/spec-driven-work/assets/$asset"
+    
+    if download "$url" "$dest"; then
+        success "  Downloaded assets/$asset"
+    else
+        error "  Failed to download assets/$asset"
         exit 1
     fi
 done

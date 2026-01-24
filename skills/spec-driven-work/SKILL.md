@@ -124,159 +124,91 @@ Log what's defined, ask about the rest.
 
 When creating or refining specs through discussion.
 
-### Process
+### Step 1: Create Research File
 
-1. **Understand scope** - What is this spec for? What processes does it cover?
-2. **Work from example** - Start with a concrete case, then generalize
-3. **Define terms** - Every term used must be defined
-4. **Document structure** - Clear sections, cross-references
-5. **Create templates** - For any repeatable process
-6. **Confirm each section** - Don't move on until current section is agreed
+Every spec development starts with a research file. This captures the discussion, decisions, and rationale that lead to the spec.
 
-### Spec Document Structure
+**Actions:**
+1. Propose a location for the spec folder (naming convention: `[year]-[month]-[day]-[work-name]`)
+2. Get user confirmation on location
+3. Create `research.md` before any discussion or investigation
 
-```markdown
-# [Spec Name]
+**This is blocking** - do not proceed until research file exists.
 
-[Brief description of what this spec covers]
+**Research file template:** [assets/research-template.md](assets/research-template.md)
 
-## [Section 1]
+### Step 2: Research & Discuss
 
-### [Process/Concept Name]
+Investigate and discuss until the spec can be written with no ambiguity.
 
-[Definition or steps]
+**Activities:**
+- Understand scope - what is this spec for? What processes does it cover?
+- Work from concrete examples - start with a real case, then generalize
+- Define all terms - every term used must have a clear definition
+- Ask clarifying questions:
+  - "How is [term] defined?"
+  - "What's the inclusion/exclusion criteria?"
+  - "Should this be a template?"
+  - "Where does this get documented?"
+  - "Is there an existing spec this should reference?"
 
-**Template** (if applicable):
-```
-[template here]
-```
+**Update research file immediately** after each:
+- **Finding** - something you learned
+- **Decision** - a decision made by the user
+- **Answer** - a question that got resolved
 
----
+**Rules:**
+- Never batch updates - update immediately after each finding
+- Only log decisions after user has made them (agent proposes, user decides)
+- Strike through answered questions, add answer reference
 
-## [Section 2]
-...
-```
+### Step 3: Confirm Research Complete
+
+Before writing the spec, explicitly confirm with the user:
+
+> "I believe research is complete. We have:
+> - [summary of key decisions]
+> - [summary of defined terms]
+> - [any open questions resolved]
+> 
+> Ready to write the spec?"
+
+**Do not proceed to spec writing without user confirmation.**
+
+### Step 4: Write the Spec
+
+Create `spec.md` in the same folder as research.
+
+**Spec template:** [assets/spec-template.md](assets/spec-template.md)
+
+**Required sections:**
+- Header (Status, Created, Research link)
+- Overview (what + current/target state)
+- Scope (In Scope / Out of Scope)
+- Steps (with Action, Files, Changes, Verification per step)
+- Verification Checklist (overall checks after all steps)
+- Execution Plan (mode + rationale)
+
+**Optional sections** (add as needed):
+- Context/Background - domain-specific info
+- Testing Plan - manual/automated testing
+- Rollback Plan - if changes are risky
+
+**Confirm each section** - don't move on until current section is agreed.
 
 ### Execution Plan Requirement
 
-Every spec must include an execution plan section that defines how steps should be executed:
+Every spec must include an execution plan. Before finalizing, propose the execution mode and get user confirmation:
 
-```markdown
-## Execution Plan
+> "For execution, I recommend [Direct/Subagents] because [reason]. Does this work?"
 
-**Mode:** Direct / Subagents
-**Rationale:** [why this mode fits the work]
-
-### Sequential
-[Steps that must run in order]
-
-### Parallel (if mode is Subagents)
-[Steps/items that can run in parallel]
-**Max concurrent:** [number]
-```
-
-**When drafting a spec, propose an execution plan and ask user to confirm:**
-
-For Direct:
-> "For execution, I recommend Direct because [reason]. Does this work?"
-
-For Subagents (must include full strategy):
-> "For execution, I recommend Subagents because [reason].
-> - Sequential: Steps 1-2
-> - Parallel: Steps 3a-3z (the 50 competitor analyses)
-> - Max concurrent: 5
-> 
-> Does this work?"
+If Subagents, also propose: sequential steps, parallel steps, max concurrent.
 
 **Recommendation guidelines:**
-- Default recommendation: Direct (especially for coding)
-- Recommend Subagents only when: many similar items (5+), detailed unambiguous steps, items are independent
-- If unsure, recommend Direct - easier to control and handle gaps
+- Default: Direct (especially for coding)
+- Subagents only when: many similar items (5+), detailed unambiguous steps, items are independent
 
 **The user decides.** Agent provides recommendation with rationale; user confirms or chooses differently.
-
-### Questions to Ask
-
-When developing specs, actively ask:
-- "How is [term] defined?"
-- "What's the inclusion/exclusion criteria?"
-- "Should this be a template?"
-- "Where does this get documented?"
-- "Is there an existing spec this should reference?"
-
-### Research Tracking
-
-When spec development requires research, track findings in a dedicated file.
-
-**When to use:** Any spec development that involves investigation before the spec can be written.
-
-**Before starting research:**
-1. Ask the user where to track research (or propose a location)
-2. Create the research file before starting any investigation
-3. This is blocking - do not investigate until the file exists
-
-**After each finding (not batched - immediately after each one):**
-
-Update the research file with:
-- **Finding** - Something you learned
-- **Decision** - Something that was decided
-- **Answer** - A question that got resolved
-
-**Never batch updates.** Update the file immediately after each finding, not after multiple investigations.
-
-**Research file format:**
-
-```markdown
-# Research Progress: [Project Name]
-
-**Started:** [date]
-**Status:** in-progress / complete
-
----
-
-## Objective
-
-[What is being researched and why. Capture the high-level goal and the key questions that need answering before the spec can be written. This ensures research can be resumed with full context if interrupted.]
-
----
-
-## Defined Terms
-
-| Term | Definition |
-|------|------------|
-| [term] | [definition] |
-
----
-
-## Findings
-
-### Finding 1: [Title]
-**Date:** [date]
-
-[What was discovered]
-
----
-
-## Decisions
-
-### Decision 1: [Title]
-**Date:** [date]
-
-**Decision:** [what was decided]
-**Rationale:** [why]
-
----
-
-## Open Questions
-
-1. [Question still unanswered]
-2. ~~[Answered question]~~ **ANSWERED:** [answer or reference to finding]
-```
-
-**Rules:**
-- Update immediately, not in batches
-- Strike through answered questions, add answer reference
-- Link to research file from the final spec
 
 ---
 
@@ -310,28 +242,7 @@ Update the progress file with:
 - **Decisions made** (if any): Choices made during execution
 - **Blockers/gaps** (if any): Why execution stopped
 
-**Progress file format:**
-
-```markdown
-# Progress: [Spec Name]
-
-**Spec:** [link to spec]
-**Started:** [date]
-**Status:** in-progress / completed / blocked
-
----
-
-## Step 1: [Step name from spec]
-- **Status:** done
-- **Result:** [what happened]
-- **Files modified:**
-  - path/to/file.ts
-
-## Step 2: [Step name from spec]
-- **Status:** blocked
-- **Result:** [what happened before blocking]
-- **Blockers:** [why stopped]
-```
+**Progress file template:** [assets/progress-template.md](assets/progress-template.md)
 
 **Rules:**
 - Never batch updates - document immediately after each step
@@ -342,32 +253,7 @@ Update the progress file with:
 
 When the spec defines verification criteria (testing, review, validation), track results and issues in the progress file.
 
-**After all steps complete, add a Verification section:**
-
-```markdown
----
-
-## Verification
-
-### [Verification Type] (per spec)
-
-**Date:** [date]
-
-| Check | Result | Notes |
-|-------|--------|-------|
-| [check from spec] | PASSED / FAILED / - | [notes, issue reference if failed] |
-
-### Issues Found
-
-#### Issue 1: [Short description]
-- **Status:** [see statuses below]
-- **Found during:** [which check]
-- **Symptom:** [what was observed]
-- **Root cause:** [why it happened - after investigation]
-- **Resolution:** [what was changed]
-- **Artifacts modified:** [if applicable]
-  - [list of files, documents, data, etc.]
-```
+After all steps complete, add a Verification section. See [assets/progress-template.md](assets/progress-template.md) for the format.
 
 **Issue statuses:**
 - `investigating` - Issue identified, looking into root cause
