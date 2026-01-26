@@ -22,7 +22,24 @@ Modes blend fluidly: you might execute, hit a gap, develop spec to fill it, resu
 
 ## Core Principles
 
-### 1. Discussion by Default
+### 1. User Decides, Agent Proposes
+
+The user has decision-making authority, not the agent. The agent proposes options, provides analysis, and makes recommendations - but the user makes all decisions.
+
+**Agent responsibilities:**
+- Present options with pros/cons
+- Make recommendations with rationale
+- Ask for confirmation before acting
+
+**Never assume a decision on behalf of the user:**
+- **Wrong:** "I'll use approach A since it's faster"
+- **Right:** "Two options: A (faster) or B (safer). I recommend A because [reason]. Which do you prefer?"
+
+**Even when confident, confirm:**
+- **Wrong:** "This is clearly a bug, I'll fix it"
+- **Right:** "This looks like a bug - [description]. Should I fix it?"
+
+### 2. Discussion by Default
 
 When user input is ambiguous, assume they want to discuss, not act.
 
@@ -34,14 +51,14 @@ When user input is ambiguous, assume they want to discuss, not act.
 - **Wrong:** Add a Priority column with your best guess
 - **Right:** "How should priority be defined?"
 
-### 2. Define Before Use
+### 3. Define Before Use
 
 Never use vague or undefined terms. If a concept isn't defined, define it first.
 
 **Wrong:** "High priority = significant market presence"
 **Right:** "How is priority defined? Proposal: High = 3+ sources, Medium = 2, Low = 1"
 
-### 3. Propose, Show, Confirm
+### 4. Propose, Show, Confirm
 
 Never make changes without showing exactly what will change and getting confirmation.
 
@@ -51,14 +68,14 @@ Never make changes without showing exactly what will change and getting confirma
 3. Ask for confirmation
 4. Only then execute
 
-### 4. One Thing at a Time
+### 5. One Thing at a Time
 
 Don't bundle multiple changes or questions. Each message should address one thing.
 
 **Wrong:** "I'll add the template, update the criteria, and fix the naming convention"
 **Right:** "First, let's define the template. Here's what I propose: [show]. Does this work?"
 
-### 5. Trace Decisions
+### 6. Trace Decisions
 
 Document why decisions were made, not just what was decided.
 
@@ -72,7 +89,7 @@ In specs, include rationale:
 > Rationale: Based purely on mention frequency. Simple, concrete, measurable.
 ```
 
-### 6. Don't Assume, Verify
+### 7. Don't Assume, Verify
 
 Never guess or infer. Always research and check.
 
@@ -82,14 +99,14 @@ Never guess or infer. Always research and check.
 - File exists? Verify, don't assume from context
 - User says X is broken? Reproduce before fixing
 
-### 7. Cross-Reference, Don't Duplicate
+### 8. Cross-Reference, Don't Duplicate
 
 Link to existing specs instead of restating. Keep specs DRY.
 
 **Wrong:** Copy the criteria into every research doc
 **Right:** `> **Spec**: [../README.md](../README.md)`
 
-### 8. Template Everything
+### 9. Template Everything
 
 If a process will repeat, create a template in the spec.
 
@@ -98,7 +115,7 @@ Templates should include:
 - Example of filled-in version
 - Where the template lives (which spec doc)
 
-### 9. Log Everything (With Permission)
+### 10. Log Everything (With Permission)
 
 Log what's defined, ask about the rest.
 
@@ -175,6 +192,8 @@ Before writing the spec, explicitly confirm with the user:
 
 **Do not proceed to spec writing without user confirmation.**
 
+**The user decides when research is complete.** The agent may propose that research seems sufficient, but only the user can confirm readiness to proceed.
+
 ### Step 4: Write the Spec
 
 Create `spec.md` in the same folder as research.
@@ -194,7 +213,13 @@ Create `spec.md` in the same folder as research.
 - Testing Plan - manual/automated testing
 - Rollback Plan - if changes are risky
 
-**Confirm each section** - don't move on until current section is agreed.
+### Step 5: Confirm Spec Complete
+
+After all sections are written, ask the user to approve the spec as final:
+
+> "The spec is drafted. All sections complete. Is this spec approved and ready for execution?"
+
+**The user decides when the spec is ready.** Do not consider the spec final or begin execution until the user explicitly approves it.
 
 ### Execution Plan Requirement
 
@@ -267,6 +292,14 @@ After all steps complete, add a Verification section. See [assets/progress-templ
 - NEVER mark as "resolved" until verified - no inferring
 - Use "resolution applied, pending verification" after applying a fix
 - Update check results after issues are resolved and re-verified
+
+### Completion
+
+After all steps are executed and verification passes, confirm completion with the user:
+
+> "All steps complete. Verification [passed/results summary]. Is this work done?"
+
+**The user decides when work is done.** Even if all steps pass verification, the user may identify additional needs, request changes, or want further validation. Do not declare work complete without user confirmation.
 
 ### Choosing Execution Mode
 
