@@ -4,7 +4,7 @@
 
 set -e
 
-VERSION="v3.0.0"
+VERSION="v3.1.0"
 CURSOR_DIR="$HOME/.cursor"
 SKILLS_DIR="$CURSOR_DIR/skills/specops"
 AGENTS_DIR="$CURSOR_DIR/agents"
