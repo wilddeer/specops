@@ -34,12 +34,6 @@ Invoke the `spec-step-execution` skill and follow it exactly.
 
 As defined in `spec-step-execution` skill.
 
-## Restrictions
-
-Do NOT use:
-- **AskUserQuestion** - User interaction is a gap
-- **TodoWrite** - Main process tracks progress
-
 ## Output
 
 Return the result as defined in `spec-step-execution` skill.

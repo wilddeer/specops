@@ -1,22 +1,18 @@
 ---
-name: Spec-Driven Work
-description: Work on projects through well-defined specs. Spec-first approach with no ambiguity.
-version: 1.5.0
+name: spec-execution
+description: Execute specs literally with zero creativity. Use this when following an existing spec.
+version: 1.0.0
 ---
 
-# spec-driven-work
+# spec-execution
 
 ## Overview
 
-Work on projects through well-defined specs. Every process gets specced, cross-referenced, and followed. Spec-first approach - no jumping to action. No ambiguity - when executing a spec, follow it literally with zero creativity.
+Execute existing specs literally. Follow the spec with zero creativity - do exactly what it says, flag gaps when the spec doesn't cover something.
 
-**Two modes:**
-1. **Spec Development** - Collaborative discussion to create/refine specs
-2. **Spec Execution** - Follow existing spec literally, flag gaps
+**Announce at start:** "Using spec-execution. Which spec are we executing?"
 
-Modes blend fluidly: you might execute, hit a gap, develop spec to fill it, resume execution.
-
-**Announce at start:** "Using spec-driven-work. Is there an existing spec for this, or are we developing one?"
+**When gaps are found:** Switch to `spec-development` skill to fill the gap, then return here.
 
 ---
 
@@ -137,118 +133,16 @@ Log what's defined, ask about the rest.
 
 ---
 
-## Spec Development Mode
-
-When creating or refining specs through discussion.
-
-### Step 1: Create Research File
-
-Every spec development starts with a research file. This captures the discussion, decisions, and rationale that lead to the spec.
-
-**Actions:**
-1. Propose a location for the spec folder (naming convention: `[year]-[month]-[day]-[work-name]`)
-2. Get user confirmation on location
-3. Create `research.md` before any discussion or investigation
-
-**This is blocking** - do not proceed until research file exists.
-
-**Research file template:** [assets/research-template.md](assets/research-template.md)
-
-### Step 2: Research & Discuss
-
-Investigate and discuss until the spec can be written with no ambiguity.
-
-**Activities:**
-- Understand scope - what is this spec for? What processes does it cover?
-- Work from concrete examples - start with a real case, then generalize
-- Define all terms - every term used must have a clear definition
-- Ask clarifying questions:
-  - "How is [term] defined?"
-  - "What's the inclusion/exclusion criteria?"
-  - "Should this be a template?"
-  - "Where does this get documented?"
-  - "Is there an existing spec this should reference?"
-
-**Update research file immediately** after each:
-- **Finding** - something you learned
-- **Decision** - a decision made by the user
-- **Answer** - a question that got resolved
-
-**Rules:**
-- Never batch updates - update immediately after each finding
-- Only log decisions after user has made them (agent proposes, user decides)
-- Strike through answered questions, add answer reference
-
-### Step 3: Confirm Research Complete
-
-Before writing the spec, explicitly confirm with the user:
-
-> "I believe research is complete. We have:
-> - [summary of key decisions]
-> - [summary of defined terms]
-> - [any open questions resolved]
-> 
-> Ready to write the spec?"
-
-**Do not proceed to spec writing without user confirmation.**
-
-**The user decides when research is complete.** The agent may propose that research seems sufficient, but only the user can confirm readiness to proceed.
-
-### Step 4: Write the Spec
-
-Create `spec.md` in the same folder as research.
-
-**Spec template:** [assets/spec-template.md](assets/spec-template.md)
-
-**Required sections:**
-- Header (Status, Created, Research link)
-- Overview (what + current/target state)
-- Scope (In Scope / Out of Scope)
-- Steps (with Action, Files, Changes, Verification per step)
-- Verification Checklist (overall checks after all steps)
-- Execution Plan (mode + rationale)
-
-**Optional sections** (add as needed):
-- Context/Background - domain-specific info
-- Testing Plan - manual/automated testing
-- Rollback Plan - if changes are risky
-
-### Step 5: Confirm Spec Complete
-
-After all sections are written, ask the user to approve the spec as final:
-
-> "The spec is drafted. All sections complete. Is this spec approved and ready for execution?"
-
-**The user decides when the spec is ready.** Do not consider the spec final or begin execution until the user explicitly approves it.
-
-### Execution Plan Requirement
-
-Every spec must include an execution plan. Before finalizing, propose the execution mode and get user confirmation:
-
-> "For execution, I recommend [Direct/Subagents] because [reason]. Does this work?"
-
-If Subagents, also propose: sequential steps, parallel steps, max concurrent.
-
-**Recommendation guidelines:**
-- Default: Direct (especially for coding)
-- Subagents only when: many similar items (5+), detailed unambiguous steps, items are independent
-
-**The user decides.** Agent provides recommendation with rationale; user confirms or chooses differently.
-
----
-
-## Spec Execution Mode
-
-When following an existing spec to do work.
-
-### Process
+## Process
 
 1. **Find the spec** - Locate relevant spec before starting work
 2. **Follow literally** - Zero creativity, do exactly what spec says
 3. **Flag gaps** - If spec doesn't cover something, stop and discuss
 4. **Report in spec terms** - Use the spec's terminology and structure
 
-### Progress Tracking
+---
+
+## Progress Tracking
 
 Document every completed step immediately after completion. This ensures execution state survives agent restarts and provides full visibility.
 
@@ -274,7 +168,9 @@ Update the progress file with:
 - Keep progress files permanently (do not delete on completion)
 - Update status field at top when execution completes or blocks
 
-### Verification Tracking
+---
+
+## Verification Tracking
 
 When the spec defines verification criteria (testing, review, validation), track results and issues in the progress file.
 
@@ -293,15 +189,25 @@ After all steps complete, add a Verification section. See [assets/progress-templ
 - Use "resolution applied, pending verification" after applying a fix
 - Update check results after issues are resolved and re-verified
 
-### Completion
+---
 
-After all steps are executed and verification passes, confirm completion with the user:
+## Completion
 
-> "All steps complete. Verification [passed/results summary]. Is this work done?"
+After all steps are executed:
+
+1. **Final review**: Spawn `spec-step-reviewer` with git range covering all spec changes
+   - Pass: spec path, progress file path, git range (first spec commit..HEAD)
+   - Handle result same as per-step reviews (APPROVED/NEEDS_FIXES/GAP)
+2. **Run verification checklist** from the spec
+3. **Confirm with user**:
+
+> "All steps complete. Final review: APPROVED. Verification [passed/results summary]. Is this work done?"
 
 **The user decides when work is done.** Even if all steps pass verification, the user may identify additional needs, request changes, or want further validation. Do not declare work complete without user confirmation.
 
-### Choosing Execution Mode
+---
+
+## Choosing Execution Mode
 
 Before starting execution, ask the user how to run the steps:
 
@@ -320,17 +226,29 @@ Before starting execution, ask the user how to run the steps:
 | **Direct** | Steps have room for interpretation, likely gaps, dependencies, or need user input. Most coding work falls here. |
 | **Subagents** | Many similar items (5+), spec has detailed implementation steps (no interpretation needed), items are independent. |
 
-### Direct Execution
+---
 
-Execute steps sequentially in the main process. User can review each step.
+## Direct Execution
 
-1. Invoke the `spec-step-execution` skill
-2. Execute the step following that skill
-3. Re-invoke `spec-driven-work` skill to restore orchestration context
+Execute steps sequentially in the main process. Each step goes through execute → review → commit cycle.
+
+**For each step:**
+
+1. **Execute**: Invoke the `spec-step-execution` skill and execute the step
+2. **Review**: Spawn `spec-step-reviewer` agent to review uncommitted changes
+   - Pass: spec path, progress file path
+3. **Handle review result:**
+   - APPROVED → Commit and continue (see below)
+   - NEEDS_FIXES → Fix issues, re-run reviewer
+   - GAP → Switch to `spec-development` to fill gap
+4. **Commit** (only after APPROVED)
+5. **Update progress file**, then **re-invoke** `spec-execution` skill to restore orchestration context
 
 Re-invoking ensures this skill is fresh in context (not compacted) before continuing to next step.
 
-### Subagent Execution
+---
+
+## Subagent Execution
 
 Delegate step execution to `spec-step-executor` agents. Main process orchestrates; subagents execute.
 
@@ -375,22 +293,30 @@ To launch parallel agents, use multiple Task tool calls in a single message:
 
 | Result | Meaning | Action |
 |--------|---------|--------|
-| SUCCESS | Step completed, verification passed | Update progress file, proceed to next step |
+| SUCCESS | Step completed, verification passed | Spawn reviewer to verify |
 | FAILED | Step attempted but errored | Investigate error, retry or escalate to user |
 | GAP | Spec doesn't cover this situation | Discuss with user, update spec if needed, re-dispatch or execute directly |
 
+**After each successful step:**
+
+1. **Spawn `spec-step-reviewer`** to review uncommitted changes:
+   - Pass: spec path, progress file path
+2. **Handle review result:**
+   - APPROVED → Commit and continue (see below)
+   - NEEDS_FIXES → Fix issues, re-run reviewer
+   - GAP → Switch to `spec-development` to fill gap
+3. **Commit** (only after APPROVED)
+4. **Update progress file**, proceed to next step
+
 ---
 
-## Mode Transitions
+## When to Switch to Development
 
-| Situation | Mode | Action |
-|-----------|------|--------|
-| User gives clear action + spec exists | Execution | Follow spec |
-| User gives clear action + no spec | Development | Create spec first |
-| User asks question | Discussion | Discuss, don't act |
-| User makes statement | Discussion | Clarify intent before acting |
-| Gap found during execution | Development | Pause, fill gap, resume |
-| Spec change needed during execution | Development | Propose change, confirm, update spec, resume |
+| Situation | Action |
+|-----------|--------|
+| Gap found during execution | Switch to `spec-development` to fill gap, then return |
+| Spec change needed | Switch to `spec-development` to update spec, then return |
+| No spec exists | Switch to `spec-development` to create spec first |
 
 ---
 
@@ -400,13 +326,12 @@ To launch parallel agents, use multiple Task tool calls in a single message:
 
 | Anti-Pattern | Instead |
 |--------------|---------|
-| Jump to editing when user mentions a file | Ask what they want to change |
-| Use undefined terms ("market presence") | Define terms first |
-| Bundle multiple changes | One change at a time |
-| Assume file contents | Read the file |
-| Guess at commands | Check documentation |
-| Fill spec gaps silently | Flag gaps, discuss |
-| Say "I'll do X, Y, and Z" | "First, let's address X. [details]. OK?" |
+| Fill spec gaps silently | Flag gaps, switch to spec-development |
+| Add improvements not in spec | Do exactly what spec says |
+| Skip verification steps | Complete all verification items |
+| Batch progress updates | Update immediately after each step |
+| Assume step succeeded | Verify before marking done |
+| Continue past a gap | Stop, flag gap, get resolution |
 
 ---
 
@@ -414,8 +339,7 @@ To launch parallel agents, use multiple Task tool calls in a single message:
 
 Before taking any action:
 - [ ] Is there a spec for this? If yes, am I following it?
-- [ ] If no spec, should I create one first?
-- [ ] Have I defined all terms I'm using?
-- [ ] Have I shown exactly what I'll change?
-- [ ] Have I confirmed with user?
-- [ ] Am I doing one thing, not multiple things?
+- [ ] Have I created a progress file?
+- [ ] Am I doing exactly what the spec says (no more, no less)?
+- [ ] Have I updated progress immediately after completing the step?
+- [ ] If something isn't covered by the spec, have I flagged it as a gap?

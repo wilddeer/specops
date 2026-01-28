@@ -1,7 +1,7 @@
 ---
-name: Spec Step Execution
-description: Execute a single step from a spec. Used by spec-step-executor agent and main process when running steps directly.
-version: 1.0.0
+name: spec-step-execution
+description: You MUST use this EVERY time you are executing a single step from a spec.
+version: 1.1.0
 ---
 
 # spec-step-execution

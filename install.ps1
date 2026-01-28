@@ -38,9 +38,12 @@ if (Test-Path $SKILLS_DIR) {
 
 # Create directories
 Write-Status "Creating directories..."
-New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-driven-work" | Out-Null
-New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-driven-work\assets" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-development" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-development\assets" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-execution" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-execution\assets" | Out-Null
 New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-step-execution" | Out-Null
+New-Item -ItemType Directory -Force -Path "$SKILLS_DIR\spec-step-review" | Out-Null
 if (-not (Test-Path $AGENTS_DIR)) {
     New-Item -ItemType Directory -Force -Path $AGENTS_DIR | Out-Null
 }
@@ -49,14 +52,16 @@ if (-not (Test-Path $AGENTS_DIR)) {
 Write-Status "Downloading skills..."
 
 $skills = @(
-    @{ name = "spec-driven-work"; file = "SKILL.md" },
-    @{ name = "spec-step-execution"; file = "SKILL.md" }
+    @{ name = "spec-development"; file = "SKILL.md" },
+    @{ name = "spec-execution"; file = "SKILL.md" },
+    @{ name = "spec-step-execution"; file = "SKILL.md" },
+    @{ name = "spec-step-review"; file = "SKILL.md" }
 )
 
 foreach ($skill in $skills) {
     $url = "$REPO_RAW/skills/$($skill.name)/$($skill.file)"
     $dest = "$SKILLS_DIR\$($skill.name)\$($skill.file)"
-    
+
     try {
         Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
         Write-Success "  Downloaded $($skill.name)"
@@ -66,24 +71,43 @@ foreach ($skill in $skills) {
     }
 }
 
-# Download assets
-Write-Status "Downloading assets..."
+# Download assets for spec-development
+Write-Status "Downloading spec-development assets..."
 
-$assets = @(
+$devAssets = @(
     "research-template.md",
-    "spec-template.md",
+    "spec-template.md"
+)
+
+foreach ($asset in $devAssets) {
+    $url = "$REPO_RAW/skills/spec-development/assets/$asset"
+    $dest = "$SKILLS_DIR\spec-development\assets\$asset"
+
+    try {
+        Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
+        Write-Success "  Downloaded spec-development/assets/$asset"
+    } catch {
+        Write-Error "  Failed to download spec-development/assets/${asset}: $_"
+        exit 1
+    }
+}
+
+# Download assets for spec-execution
+Write-Status "Downloading spec-execution assets..."
+
+$execAssets = @(
     "progress-template.md"
 )
 
-foreach ($asset in $assets) {
-    $url = "$REPO_RAW/skills/spec-driven-work/assets/$asset"
-    $dest = "$SKILLS_DIR\spec-driven-work\assets\$asset"
-    
+foreach ($asset in $execAssets) {
+    $url = "$REPO_RAW/skills/spec-execution/assets/$asset"
+    $dest = "$SKILLS_DIR\spec-execution\assets\$asset"
+
     try {
         Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
-        Write-Success "  Downloaded assets/$asset"
+        Write-Success "  Downloaded spec-execution/assets/$asset"
     } catch {
-        Write-Error "  Failed to download assets/${asset}: $_"
+        Write-Error "  Failed to download spec-execution/assets/${asset}: $_"
         exit 1
     }
 }
@@ -92,13 +116,14 @@ foreach ($asset in $assets) {
 Write-Status "Downloading agents..."
 
 $agents = @(
-    "spec-step-executor.md"
+    "spec-step-executor.md",
+    "spec-step-reviewer.md"
 )
 
 foreach ($agent in $agents) {
     $url = "$REPO_RAW/agents/$agent"
     $dest = "$AGENTS_DIR\$agent"
-    
+
     try {
         Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
         Write-Success "  Downloaded $agent"
@@ -118,3 +143,4 @@ Write-Host ""
 Write-Host "To uninstall:" -ForegroundColor White
 Write-Host "  Remove-Item -Recurse -Force '$SKILLS_DIR'" -ForegroundColor Gray
 Write-Host "  Remove-Item '$AGENTS_DIR\spec-step-executor.md'" -ForegroundColor Gray
+Write-Host "  Remove-Item '$AGENTS_DIR\spec-step-reviewer.md'" -ForegroundColor Gray

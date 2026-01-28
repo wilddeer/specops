@@ -47,9 +47,12 @@ fi
 
 # Create directories
 status "Creating directories..."
-mkdir -p "$SKILLS_DIR/spec-driven-work"
-mkdir -p "$SKILLS_DIR/spec-driven-work/assets"
+mkdir -p "$SKILLS_DIR/spec-development"
+mkdir -p "$SKILLS_DIR/spec-development/assets"
+mkdir -p "$SKILLS_DIR/spec-execution"
+mkdir -p "$SKILLS_DIR/spec-execution/assets"
 mkdir -p "$SKILLS_DIR/spec-step-execution"
+mkdir -p "$SKILLS_DIR/spec-step-review"
 mkdir -p "$AGENTS_DIR"  # Creates if not exists, no-op otherwise
 
 # Download function
@@ -72,7 +75,7 @@ download() {
 # Download skills
 status "Downloading skills..."
 
-for skill in "spec-driven-work" "spec-step-execution"; do
+for skill in "spec-development" "spec-execution" "spec-step-execution" "spec-step-review"; do
     url="$REPO_RAW/skills/$skill/SKILL.md"
     dest="$SKILLS_DIR/$skill/SKILL.md"
     
@@ -84,17 +87,32 @@ for skill in "spec-driven-work" "spec-step-execution"; do
     fi
 done
 
-# Download assets
-status "Downloading assets..."
+# Download assets for spec-development
+status "Downloading spec-development assets..."
 
-for asset in "research-template.md" "spec-template.md" "progress-template.md"; do
-    url="$REPO_RAW/skills/spec-driven-work/assets/$asset"
-    dest="$SKILLS_DIR/spec-driven-work/assets/$asset"
+for asset in "research-template.md" "spec-template.md"; do
+    url="$REPO_RAW/skills/spec-development/assets/$asset"
+    dest="$SKILLS_DIR/spec-development/assets/$asset"
     
     if download "$url" "$dest"; then
-        success "  Downloaded assets/$asset"
+        success "  Downloaded spec-development/assets/$asset"
     else
-        error "  Failed to download assets/$asset"
+        error "  Failed to download spec-development/assets/$asset"
+        exit 1
+    fi
+done
+
+# Download assets for spec-execution
+status "Downloading spec-execution assets..."
+
+for asset in "progress-template.md"; do
+    url="$REPO_RAW/skills/spec-execution/assets/$asset"
+    dest="$SKILLS_DIR/spec-execution/assets/$asset"
+    
+    if download "$url" "$dest"; then
+        success "  Downloaded spec-execution/assets/$asset"
+    else
+        error "  Failed to download spec-execution/assets/$asset"
         exit 1
     fi
 done
@@ -102,7 +120,7 @@ done
 # Download agents
 status "Downloading agents..."
 
-for agent in "spec-step-executor.md"; do
+for agent in "spec-step-executor.md" "spec-step-reviewer.md"; do
     url="$REPO_RAW/agents/$agent"
     dest="$AGENTS_DIR/$agent"
     
@@ -124,3 +142,4 @@ echo ""
 echo -e "${WHITE}To uninstall:${NC}"
 echo -e "${GRAY}  rm -rf '$SKILLS_DIR'${NC}"
 echo -e "${GRAY}  rm '$AGENTS_DIR/spec-step-executor.md'${NC}"
+echo -e "${GRAY}  rm '$AGENTS_DIR/spec-step-reviewer.md'${NC}"

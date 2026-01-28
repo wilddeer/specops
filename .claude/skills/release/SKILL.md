@@ -27,11 +27,12 @@ Update version in these files:
 - `install.ps1`: `$VERSION = "vX.Y.Z"`
 - `install.sh`: `VERSION="vX.Y.Z"`
 - `README.md`: Update install URLs to use `vX.Y.Z` instead of previous version
+- `.claude-plugin/plugin.json`: `"version": "X.Y.Z"` (no "v" prefix)
 
 ### 3. Commit Version Bump
 
 ```bash
-git add install.ps1 install.sh README.md
+git add install.ps1 install.sh README.md .claude-plugin/plugin.json
 git commit -m "Bump version to vX.Y.Z"
 ```
 
@@ -81,5 +82,6 @@ curl -fsSL https://raw.githubusercontent.com/wilddeer/specops/main/install.sh | 
 - [ ] Version follows semver
 - [ ] Both install scripts updated
 - [ ] README install URLs updated
-- [ ] Tag matches version in scripts and README
+- [ ] plugin.json version updated (no "v" prefix)
+- [ ] Tag matches version in scripts, README, and plugin.json
 - [ ] Release notes summarize changes clearly

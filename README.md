@@ -21,12 +21,14 @@ Modes blend fluidly: execute a spec, hit a gap, develop spec to fill it, resume 
 
 | Type | Name | Description |
 |------|------|-------------|
-| Skill | `spec-driven-work` | Main skill for spec development and execution |
-| Skill | `spec-step-execution` | Step execution skill for subagents |
+| Skill | `spec-development` | Research, discuss, and write specs |
+| Skill | `spec-execution` | Execute specs literally, track progress |
+| Skill | `spec-step-execution` | Execute a single step from a spec |
+| Skill | `spec-step-review` | Review implementation against spec |
 | Agent | `spec-step-executor` | Subagent for executing individual spec steps |
-| Command | `/spec-driven-workflow` | Start spec-driven work (Claude Code only) |
+| Agent | `spec-step-reviewer` | Subagent for reviewing implementation against spec |
 
-Cursor exposes installed skills as commands, so you can use`/spec-driven-work` to start spec-driven work.
+Skills are usually automatically exposed as commands (`/spec-development`, `/spec-execution`).
 
 ## Installation
 

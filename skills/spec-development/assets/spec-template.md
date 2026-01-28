@@ -76,6 +76,10 @@ END OPTIONAL SECTIONS -->
 - [ ] [Specific check that can be verified]
 - [ ] [Another check]
 
+**Mandatory (every step):**
+- [ ] `spec-step-reviewer`: APPROVED
+- [ ] Changes committed
+
 ---
 
 ### Step 2: [Step title]
@@ -88,6 +92,10 @@ END OPTIONAL SECTIONS -->
 **Verification:**
 - [ ] [Check]
 
+**Mandatory (every step):**
+- [ ] `spec-step-reviewer`: APPROVED
+- [ ] Changes committed
+
 ---
 
 ## Verification Checklist
@@ -97,6 +105,9 @@ END OPTIONAL SECTIONS -->
 - [ ] [End-to-end verification]
 - [ ] [Integration check]
 - [ ] [No regressions]
+
+**Mandatory (final review):**
+- [ ] `spec-step-reviewer`: APPROVED (pass git range covering all spec changes)
 
 ---
 
