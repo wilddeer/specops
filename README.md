@@ -1,14 +1,22 @@
 # SpecOps
 
-Work on projects through well-defined specs. Spec-first approach with no ambiguity — every process gets specced, cross-referenced, and followed.
+Skills and subagents for spec-driven development. Spec-first approach: research, define, execute. No ambiguity, no guessing.
 
 ## What it does
 
-**Two modes:**
-- **Spec Development** — Collaborative discussion to create and refine specs
-- **Spec Execution** — Follow existing specs literally, flag gaps
+**The problem:** Agents lose context between sessions. They jump to execution without discussion, make unexpected changes, forget decisions, repeat work.
 
-Modes blend fluidly: execute a spec, hit a gap, develop spec to fill it, resume execution.
+**The solution:** Specs as persistent memory. Every task gets a spec committed to version control — agents can pick up exactly where they left off.
+
+**How it works:**
+
+1. **Research** — Investigate the problem, gather context, document findings in `research.md`
+2. **Spec** — Define the solution with unambiguous steps in `spec.md`
+3. **Execute** — Follow the spec literally, step by step
+4. **Review** — Each step gets reviewed before committing
+5. **Track** — Progress tracked in `progress.md`, gaps flagged and filled
+
+Specs live in your repo and get committed. They survive sessions, editors, and model changes.
 
 **Core principles:**
 - Discussion by default — when input is ambiguous, discuss don't act
@@ -65,6 +73,10 @@ To uninstall, remove `~/.cursor/skills/specops/` and `~/.cursor/agents/spec-step
 # Install the plugin
 /plugin install specops@wilddeer-specops
 ```
+
+## Acknowledgements
+
+Inspired by [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
 ## License
 
