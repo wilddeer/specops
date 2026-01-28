@@ -3,7 +3,7 @@
 
 $ErrorActionPreference = "Stop"
 
-$VERSION = "v3.1.0"
+$VERSION = "v4.0.0"
 $CURSOR_DIR = "$HOME\.cursor"
 $SKILLS_DIR = "$CURSOR_DIR\skills\specops"
 $AGENTS_DIR = "$CURSOR_DIR\agents"
