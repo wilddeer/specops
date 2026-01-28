@@ -57,6 +57,8 @@ git log $(git describe --tags --abbrev=0 HEAD^)..HEAD --oneline
 gh release create vX.Y.Z --title "vX.Y.Z" --notes "RELEASE_NOTES_HERE"
 ```
 
+**PowerShell note:** Escape backticks by doubling them (`` ` `` → ``` `` ```).
+
 Format release notes as:
 ```markdown
 ## Changes
