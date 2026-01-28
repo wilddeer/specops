@@ -27,6 +27,8 @@ The user has decision-making authority, not the agent. The agent proposes option
 - Make recommendations with rationale
 - Ask for confirmation before acting
 
+> **Tool tip:** When presenting options or asking for choices, use structured question tools when available (`AskQuestion`, `AskUserQuestion` or similar). These provide a better UX than plain text options.
+
 **Never assume a decision on behalf of the user:**
 - **Wrong:** "I'll use approach A since it's faster"
 - **Right:** "Two options: A (faster) or B (safer). I recommend A because [reason]. Which do you prefer?"
@@ -214,7 +216,7 @@ Before starting execution, ask the user how to run the steps:
 > "Before executing, how should I run the steps?
 > - **Direct** (sequential, you review each step)
 > - **Subagents** (parallel where possible, faster)
-> 
+>
 > My recommendation: [direct/subagents] because [reason]."
 
 **If the spec defines an execution plan** → follow it without asking.

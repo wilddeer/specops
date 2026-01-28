@@ -27,6 +27,8 @@ The user has decision-making authority, not the agent. The agent proposes option
 - Make recommendations with rationale
 - Ask for confirmation before acting
 
+> **Tool tip:** When presenting options or asking for choices, use structured question tools when available (`AskQuestion`, `AskUserQuestion` or similar). These provide a better UX than plain text options.
+
 **Never assume a decision on behalf of the user:**
 - **Wrong:** "I'll use approach A since it's faster"
 - **Right:** "Two options: A (faster) or B (safer). I recommend A because [reason]. Which do you prefer?"
@@ -181,7 +183,7 @@ Before writing the spec, explicitly confirm with the user:
 > - [summary of key decisions]
 > - [summary of defined terms]
 > - [any open questions resolved]
-> 
+>
 > Ready to write the spec?"
 
 **Do not proceed to spec writing without user confirmation.**
